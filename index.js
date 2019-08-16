@@ -6,7 +6,7 @@ app.use(express.static('views/vendors'))
 const port = 3001
 const Papa = require('papaparse')
 const moment = require('moment')
-var db = require('./db').db
+var { db, errdb } = require('./db')
 
 
 app.get('/', async (req, res) => {
@@ -16,6 +16,16 @@ app.get('/', async (req, res) => {
   let result = await db.find({ selector: { timestamp: {$exists: true} }, sort: [{timestamp: 'desc'}] })
   console.log(result.docs)
   res.render('table', { 
+    data: result.docs
+  })
+})
+app.get('/errors', async (req, res) => {
+  await errdb.createIndex({
+    index: { fields: [{'timestamp': 'desc'}] }
+  })
+  let result = await errdb.find({ selector: { timestamp: {$exists: true} }, sort: [{timestamp: 'desc'}] })
+  console.log(result.docs)
+  res.render('errtable', { 
     data: result.docs
   })
 })
