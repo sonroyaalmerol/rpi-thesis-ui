@@ -18,4 +18,4 @@ app.get('/', async (req, res) => {
   })
 })
 
-app.listen(port, () => console.log(`Thesis API listening on port ${port}!`))
+app.listen(port, '127.0.0.1', () => console.log(`Thesis API listening on port ${port}!`))
