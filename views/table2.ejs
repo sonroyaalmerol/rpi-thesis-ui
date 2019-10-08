@@ -75,46 +75,44 @@
     </head>
     <body>
         <div id="loader"></div>
-        <div id="main" class="animate-bottom" style="display: none;">
-            <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-0">
-
-                    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
-                            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                    <div class="hamburger">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                    </div>
-                            </button>
-                            
-                            <div class="menu-logo">
-                                    <div class="navbar-brand">
-                                            <span class="navbar-logo">
-                                            <a onclick="window.location.href='/'">
-                                                    <img src="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" alt="Mobirise" title="" style="height: 4rem;">
-                                            </a>
-                                            </span>
-                                            <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" onclick="window.location.href='/'">SOLAR DATA ANALYZER</a></span>
-                                    </div>
-                            </div>
-                            
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-                                    <a class="nav-link link text-white display-4" onclick="window.location.href='/table'"><span class="mbri-growing-chart mbr-iconfont mbr-iconfont-btn"></span>
-                    
-                                    Data Analyzer</a>
-                                    </li><li class="nav-item"><a class="nav-link link text-white display-4" onclick="window.location.href='/errors'"><span class="mbri-italic mbr-iconfont mbr-iconfont-btn"></span>Errors</a></li>
-                                            <li class="nav-item">
-                                            <a class="nav-link link text-white display-4" onclick="window.location.href='/'"><span class="mbri-star mbr-iconfont mbr-iconfont-btn"></span>
-                    
-                                            About &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</a>
-                                    </li></ul>
+        <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-0">
+            <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                
+                <div class="menu-logo">
+                        <div class="navbar-brand">
+                                <span class="navbar-logo">
+                                <a onclick="window.location.href='/'">
+                                        <img src="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" alt="Mobirise" title="" style="height: 4rem;">
+                                </a>
+                                </span>
+                                <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" onclick="window.location.href='/'">SOLAR DATA ANALYZER</a></span>
+                        </div>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
+                        <a class="nav-link link text-white display-4" onclick="window.location.href='/table'"><span class="mbri-growing-chart mbr-iconfont mbr-iconfont-btn"></span>
         
-                            </div>
-                    </nav>
-            </section>
-            
+                        Data Analyzer</a>
+                        </li><li class="nav-item"><a class="nav-link link text-white display-4" onclick="window.location.href='/errors'"><span class="mbri-italic mbr-iconfont mbr-iconfont-btn"></span>Errors</a></li>
+                                <li class="nav-item">
+                                <a class="nav-link link text-white display-4" onclick="window.location.href='/'"><span class="mbri-star mbr-iconfont mbr-iconfont-btn"></span>
+        
+                                About &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</a>
+                        </li></ul>
+
+                </div>
+            </nav>
+        </section>
+        <div id="main" class="animate-bottom" style="display: none;">
             <br><br><br><br>
             <div style="margin: 0px 50px 30px 50px">
                 Filter Data by Date: &nbsp;
@@ -133,7 +131,7 @@
                     <hr>
                     <table id="data" class="table table-striped table-bordered" style="width:100%">
                     <thead>
-                            <tr>
+                        <tr>
                             <th>Timestamp</th>
                             <th>Voltage Reading</th>
                             <th>Current Reading</th>
@@ -142,11 +140,11 @@
                             <th>Humidity</th>
                             <th>Luminosity</th>
                             <th>Global Horizontal Irradiance (GHI)</th>
-                            </tr>
+                        </tr>
                     </thead>
                     <tbody>
-                            <% for(var i=0; i < data.length; i++) { %>
-                            <tr>
+                        <% for(var i=0; i < data.length; i++) { %>
+                        <tr>
                             <td><%= data[i].timestamp %></td>
                             <td><%= data[i].voltage %></td>
                             <td><%= data[i].current %></td>
@@ -155,22 +153,20 @@
                             <td><%= data[i].humidity %></td>
                             <td><%= data[i].luminosity %></td>
                             <td><%= data[i].radiation %></td>
-                            </tr>
-                            <% } %>
+                        </tr>
+                        <% } %>
                     </tbody>
                     </table>
                 </div>
                 
                 
                 <div id="Graphed Data" class="tabcontent">
-                <center>
                     <div id="dataChart" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
                     <div id="dataChart2" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
                     <div id="dataChart3" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
                     <div id="dataChart4" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
                     <div id="dataChart5" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
                     <div id="dataChart6" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
-                </center>
                 </div>
                 
                 <div id="Analysis" class="tabcontent">
@@ -181,11 +177,11 @@
                 
                 <div id="Setting" class="tabcontent">
                     <form action="/settings" method="post">
-                            <% for(var i=0; i < setting.length; i++) { %>
-                            <%= setting[i].name %>: <input type="text" name="<%= setting[i].name %>" value="<%= setting[i].value %>" placeholder="<%= setting[i].name %>" /><br>
-                            <% } %>
-                            <input type="submit" />
-                            <button type="button" onclick="location.href = '/settingsdef';">Reset to Defaults</button>
+                        <% for(var i=0; i < setting.length; i++) { %>
+                        <%= setting[i].name %>: <input type="text" name="<%= setting[i].name %>" value="<%= setting[i].value %>" placeholder="<%= setting[i].name %>" /><br>
+                        <% } %>
+                        <input type="submit" />
+                        <button type="button" onclick="location.href = '/settingsdef';">Reset to Defaults</button>
                     </form>
                 </div>
             </div>
