@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" type="image/x-icon">
+        <meta name="description" content="">
+        <title>Data Analyzer</title>
+        
+        <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+        <link rel="stylesheet" href="assets/tether/tether.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+        <link rel="stylesheet" href="assets/socicon/css/styles.css">
+        <link rel="stylesheet" href="assets/dropdown/css/style.css">
+        <link rel="stylesheet" href="assets/theme/css/style.css">
+        <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+        <link rel="stylesheet" href="/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="/tablez.css">
+        <style>
+            /* Center the loader */
+            #loader {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              z-index: 1;
+              width: 150px;
+              height: 150px;
+              margin: -75px 0 0 -75px;
+              border: 16px solid #f3f3f3;
+              border-radius: 50%;
+              border-top: 16px solid #3498db;
+              width: 120px;
+              height: 120px;
+              -webkit-animation: spin 2s linear infinite;
+              animation: spin 2s linear infinite;
+            }
+            
+            @-webkit-keyframes spin {
+              0% { -webkit-transform: rotate(0deg); }
+              100% { -webkit-transform: rotate(360deg); }
+            }
+            
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+            
+            /* Add animation to "page content" */
+            .animate-bottom {
+              position: relative;
+              -webkit-animation-name: animatebottom;
+              -webkit-animation-duration: 1s;
+              animation-name: animatebottom;
+              animation-duration: 1s
+            }
+            
+            @-webkit-keyframes animatebottom {
+              from { bottom:-100px; opacity:0 } 
+              to { bottom:0px; opacity:1 }
+            }
+            
+            @keyframes animatebottom { 
+              from{ bottom:-100px; opacity:0 } 
+              to{ bottom:0; opacity:1 }
+            }
+            
+            #main {
+              display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader"></div>
+        <div id="main" class="animate-bottom" style="display: none;">
+            <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-0">
+
+                    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+                            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <div class="hamburger">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                    </div>
+                            </button>
+                            
+                            <div class="menu-logo">
+                                    <div class="navbar-brand">
+                                            <span class="navbar-logo">
+                                            <a onclick="window.location.href='/'">
+                                                    <img src="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" alt="Mobirise" title="" style="height: 4rem;">
+                                            </a>
+                                            </span>
+                                            <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" onclick="window.location.href='/'">SOLAR DATA ANALYZER</a></span>
+                                    </div>
+                            </div>
+                            
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
+                                    <a class="nav-link link text-white display-4" onclick="window.location.href='/table'"><span class="mbri-growing-chart mbr-iconfont mbr-iconfont-btn"></span>
+                    
+                                    Data Analyzer</a>
+                                    </li><li class="nav-item"><a class="nav-link link text-white display-4" onclick="window.location.href='/errors'"><span class="mbri-italic mbr-iconfont mbr-iconfont-btn"></span>Errors</a></li>
+                                            <li class="nav-item">
+                                            <a class="nav-link link text-white display-4" onclick="window.location.href='/'"><span class="mbri-star mbr-iconfont mbr-iconfont-btn"></span>
+                    
+                                            About &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</a>
+                                    </li></ul>
+        
+                            </div>
+                    </nav>
+            </section>
+            
+            <br><br><br><br>
+            <div style="margin: 0px 50px 30px 50px">
+                Filter Data by Date: &nbsp;
+                From <input type="text" readonly="readonly" id="min" class="search-input datepicker">&nbsp;&nbsp;To 
+                <input type="text" readonly="readonly" id="max" class="search-input datepicker">
+                <hr>
+                <div class="tab">
+                    <button class="tablinks" onclick="openStuff(event, 'Tabulated Data')" id="defaultOpen">Tabulated Data</button>
+                    <button class="tablinks" onclick="openStuff(event, 'Graphed Data')">Graphed Data</button>
+                    <button class="tablinks" onclick="openStuff(event, 'Analysis')">Analysis</button>
+                    <button class="tablinks" onclick="openStuff(event, 'Setting')">Setting</button>
+                </div>
+                
+                <div id="Tabulated Data" class="tabcontent" style="overflow-x:auto">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/csv'">Download CSV</button>
+                    <hr>
+                    <table id="data" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                            <tr>
+                            <th>Timestamp</th>
+                            <th>Voltage Reading</th>
+                            <th>Current Reading</th>
+                            <th>Power</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th>Luminosity</th>
+                            <th>Global Horizontal Irradiance (GHI)</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                            <% for(var i=0; i < data.length; i++) { %>
+                            <tr>
+                            <td><%= data[i].timestamp %></td>
+                            <td><%= data[i].voltage %></td>
+                            <td><%= data[i].current %></td>
+                            <td><%= data[i].power %></td>
+                            <td><%= data[i].temperature %></td>
+                            <td><%= data[i].humidity %></td>
+                            <td><%= data[i].luminosity %></td>
+                            <td><%= data[i].radiation %></td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                    </table>
+                </div>
+                
+                
+                <div id="Graphed Data" class="tabcontent">
+                <center>
+                    <div id="dataChart" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="dataChart2" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="dataChart3" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="dataChart4" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="dataChart5" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="dataChart6" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                </center>
+                </div>
+                
+                <div id="Analysis" class="tabcontent">
+                    <div id="anChart1" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="anChart2" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                    <div id="anChart3" style="min-width: 300px; height: 500px; margin: 0 auto"></div>
+                </div>
+                
+                <div id="Setting" class="tabcontent">
+                    <form action="/settings" method="post">
+                            <% for(var i=0; i < setting.length; i++) { %>
+                            <%= setting[i].name %>: <input type="text" name="<%= setting[i].name %>" value="<%= setting[i].value %>" placeholder="<%= setting[i].name %>" /><br>
+                            <% } %>
+                            <input type="submit" />
+                            <button type="button" onclick="location.href = '/settingsdef';">Reset to Defaults</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/jquery.js"></script>
+        <script src="/jquery.dataTables.min.js"></script>
+        <script src="/bootstrap.min.js"></script>
+        <script src="/jquery-ui.min.js"></script>
+        <script src="/dataTables.bootstrap4.min.js"></script>
+        <script src="/moment.min.js"></script>
+        <script src="/Chart.min.js"></script>
+        <script src="/bootstrap-datepicker.min.js"></script>
+        <script src="/assets/highcharts/highcharts.js"></script>
+        <script src="/assets/highcharts/modules/exporting.js"></script>
+        <script src="/assets/highcharts/modules/export-data.js"></script>
+        <script src="assets/popper/popper.min.js"></script>
+        <script src="assets/tether/tether.min.js"></script>
+        <script src="assets/dropdown/js/nav-dropdown.js"></script>
+        <script src="assets/dropdown/js/navbar-dropdown.js"></script>
+        <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+        <script src="assets/parallax/jarallax.min.js"></script>
+        <script src="assets/smoothscroll/smooth-scroll.js"></script>
+        <script src="assets/theme/js/script.js"></script>
+        <!-- Script for Formatting Table -->
+        <script>
+            $(document).ready(function() {
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var min = $('#min').datepicker('getDate');
+                        var max = $('#max').datepicker('getDate');
+                        var startDate = new Date(data[0]);
+                        startDate.setHours(0);
+                        startDate.setSeconds(0);
+                        startDate.setMinutes(0);
+                        startDate.setMilliseconds(0);
+                        if (min == null && max == null) return true;
+                        if (min == null && startDate <= max) return true;
+                        if (max == null && startDate >= min) return true;
+                        if (startDate <= max && startDate >= min) return true;
+                        return false;
+                    }
+                );
+                
+                $.fn.dataTable.moment('MMM DD YYYY, hh:mm:ss A')
+                
+                var datas = $('#data').DataTable( {
+                    columnDefs:[{targets: 0, render: (data) => {
+                        return moment(data).format("MM/DD/YYYY, h:mm:ss a");
+                    }}],
+                    order: [[ 0, "desc" ]],
+                } );
+                
+                $( ".datepicker" ).datepicker({
+                    onSelect: function () { datas.draw(); console.log("test2") },
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: "yy-mm-dd",
+                    showOn: "button",
+                    showAnim: 'slideDown',
+                    showButtonPanel: true ,
+                    autoSize: true,
+                    buttonText: "Select date",
+                    closeText: "Clear",
+                    orientation: "auto"
+                } );
+                
+            
+                $(document).on("click", ".ui-datepicker-close", function(){
+                    $('.datepicker').val("")
+                        datas.columns(0).search("").draw();
+                    } );
+                    
+                var chartColors = {
+                    red: 'rgba(255, 99, 132, 0.5)',
+                    orange: 'rgba(255, 159, 64, 0.5)',
+                    yellow: 'rgba(255, 205, 86, 0.5)',
+                    green: 'rgba(75, 192, 192, 0.5)',
+                    blue: 'rgba(54, 162, 235, 0.5)',
+                    purple: 'rgba(153, 102, 255, 0.5)',
+                    grey: 'rgba(231,233,237, 0.5)'
+                }
+                var initData = () => {
+                    var rawData = <%- JSON.stringify(data) %>;
+                    rawData = rawData.filter(function(x) {
+                        var min = $('#min').datepicker('getDate');
+                        var max = $('#max').datepicker('getDate');
+                        var startDate = new Date(x.timestamp);
+                        startDate.setHours(0);
+                        startDate.setSeconds(0);
+                        startDate.setMinutes(0);
+                        startDate.setMilliseconds(0);
+                        if (min == null && max == null) return true;
+                        if (min == null && startDate <= max) return true;
+                        if (max == null && startDate >= min) return true;
+                        if (startDate <= max && startDate >= min) return true;
+                        return false;
+                    })
+                    var labels = rawData.map(function(e) {
+                        return moment(new Date(e.timestamp)).format("MM/DD/YYYY, h:mm:ss a")
+                    })
+                    var temperature = rawData.map(function(e) {
+                        return parseFloat(e.temperature);
+                    })
+                    
+                    var humidity = rawData.map(function(e) {
+                        return parseFloat(e.humidity);
+                    })
+                    var voltage = rawData.map(function(e) {
+                        return parseFloat(e.voltage);
+                    })
+                    var current = rawData.map(function(e) {
+                        return parseFloat(e.current);
+                    })
+                    var luminosity = rawData.map(function(e) {
+                        return parseFloat(e.luminosity);
+                    })
+                    var radiation = rawData.map(function(e) {
+                        return parseFloat(e.radiation);
+                    })
+                    var Pc = rawData.map(function(e) {
+                        return parseFloat(e.Pc);
+                    })
+                    var power = rawData.map(function(e) {
+                        return parseFloat(e.power);
+                    })
+                    var Pfixed = rawData.map(function(e) {
+                        return parseFloat(e.Pfixed);
+                    })
+                    var Praw = rawData.map(function(e) {
+                        return parseFloat(e.Praw);
+                    })
+                    
+                    return [labels, temperature, humidity, voltage, current,
+                            luminosity, radiation, Pc, power, Pfixed, Praw]
+                }
+                var chartData = initData();
+                
+                var ctx = Highcharts.chart('dataChart', {
+                chart: {type: 'line'},
+                title: {text: 'Temperature'},
+                xAxis: {categories: chartData[0], reversed: true},
+                yAxis: {title: {text: 'Temperature (Â°C)'}},
+                plotOptions: {
+                    line: {
+                        dataLabels: {enabled: false},
+                        enableMouseTracking: true,
+                        color: '#FF0000'
+                        }
+                    },
+                series: [{data: chartData[1]}]
+                });
+                
+                var ctx2 = Highcharts.chart('dataChart2', {
+                chart: {type: 'line'},
+                title: {text: 'Humidity'},
+                xAxis: {categories: chartData[0], reversed: true},
+                yAxis: {title: {text: 'Humidity (%)'}},
+                plotOptions: {
+                    line: {
+                        dataLabels: {enabled: false},
+                        enableMouseTracking: true,
+                        color: '#33A1DE'
+                        }
+                    },
+                series: [{data: chartData[2]}]
+                });
+                
+                var ctx3 = Highcharts.chart('dataChart3', {
+                chart: {type: 'line'},
+                title: {text: 'Luminosity'},
+                xAxis: {categories: chartData[0], reversed: true},
+                yAxis: {title: {text: 'Lumens'}},
+                plotOptions: {
+                    line: {
+                        dataLabels: {enabled: false},
+                        enableMouseTracking: true,
+                        color: '#33A1DE'
+                        }
+                    },
+                series: [{data: chartData[5]}]
+                });
+                
+                var ctx4 = Highcharts.chart('dataChart4', {
+                chart: {type: 'line'},
+                title: {text: 'Global Horizontal Irradiation'},
+                xAxis: {categories: chartData[0], reversed: true},
+                yAxis: {title: {text: 'W/m2'}},
+                plotOptions: {
+                    line: {
+                        dataLabels: {enabled: false},
+                        enableMouseTracking: true,
+                        color: '#00AF33'
+                        }
+                    },
+                series: [{data: chartData[6]}]
+                });
+                
+                var ctx5 = Highcharts.chart('dataChart5', {
+                chart: {type: 'line'},
+                title: {text: 'Voltage'},
+                xAxis: {categories: chartData[0], reversed: true},
+                yAxis: {title: {text: 'Volts (V)'}},
+                plotOptions: {
+                    line: {
+                        dataLabels: {enabled: false},
+                        enableMouseTracking: true,
+                        color: '#7D26CD'
+                        }
+                    },
+                series: [{data: chartData[3]}]
+                });
+                
+                var ctx6 = Highcharts.chart('dataChart6', {
+                chart: {type: 'line'},
+                title: {text: 'Current'},
+                xAxis: {categories: chartData[0], reversed: true, },
+                yAxis: {title: {text: 'Amperes (A)'}},
+                plotOptions: {
+                    line: {
+                        dataLabels: {enabled: false},
+                        enableMouseTracking: true,
+                        color: '#FFA500'
+                        }
+                    },
+                series: [{data: chartData[4]}]
+                });
+                
+                var ctx7 = Highcharts.chart('anChart1', {
+                    title: {text: 'Power Loss Due to Change in Temperature'},
+                    xAxis: [{categories: chartData[0], reversed: true, crosshair: true}],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} °C',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: 'Temperature',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+
+                    }, { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Power Loss',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        labels: {
+                            format: '{value} W',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 80,
+                        verticalAlign: 'top',
+                        y: 55,
+                        floating: true,
+                        backgroundColor:
+                            Highcharts.defaultOptions.legend.backgroundColor || // theme
+                            'rgba(255,255,255,0.25)'
+                    },
+                    series: [{
+                        name: 'Temperature',
+                        type: 'spline',
+                        yAxis: 0,
+                        data: chartData[1],
+                        tooltip: {
+                            valueSuffix: ' °C'
+                        }
+
+                    }, {
+                        name: 'Power Loss',
+                        type: 'spline',
+                        yAxis: 1,
+                        data: chartData[7],
+                        marker: {
+                            enabled: false
+                        },
+                        dashStyle: 'shortdot',
+                        tooltip: {
+                            valueSuffix: ' W'
+                        }
+
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    floating: false,
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    x: 0,
+                                    y: 0
+                                },
+                                yAxis: [{
+                                    labels: {
+                                        align: 'right',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }, {
+                                    labels: {
+                                        align: 'left',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }]
+                            }
+                        }]
+                    }
+                });
+
+                var ctx8 = Highcharts.chart('anChart2', {
+                    title: {text: 'Expected Raw Power and Power Loss for Fixed Setup'},
+                    xAxis: [{categories: chartData[0], reversed: true, crosshair: true}],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} W',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        title: {
+                            text: 'Raw Power',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+
+                    }, { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Power Loss',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        labels: {
+                            format: '{value} W',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 80,
+                        verticalAlign: 'top',
+                        y: 55,
+                        floating: true,
+                        backgroundColor:
+                            Highcharts.defaultOptions.legend.backgroundColor || // theme
+                            'rgba(255,255,255,0.25)'
+                    },
+                    series: [{
+                        name: 'Raw Power',
+                        type: 'spline',
+                        yAxis: 0,
+                        data: chartData[10],
+                        tooltip: {
+                            valueSuffix: ' W'
+                        }
+
+                    }, {
+                        name: 'Power Loss',
+                        type: 'spline',
+                        yAxis: 1,
+                        data: chartData[7],
+                        marker: {
+                            enabled: false
+                        },
+                        dashStyle: 'shortdot',
+                        tooltip: {
+                            valueSuffix: ' W'
+                        }
+
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    floating: false,
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    x: 0,
+                                    y: 0
+                                },
+                                yAxis: [{
+                                    labels: {
+                                        align: 'right',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }, {
+                                    labels: {
+                                        align: 'left',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }]
+                            }
+                        }]
+                    }
+                });
+
+                var ctx9 = Highcharts.chart('anChart3', {
+                chart: {type: 'line'},
+                title: {text: 'Output Power for Tracked and Fixed Systems'},
+                xAxis: {categories: chartData[0], reversed: true},
+                yAxis: {title: {text: 'Power (W)'}},
+                plotOptions: {
+                    line: {
+                            dataLabels: {enabled: false},
+                            enableMouseTracking: true
+                        }
+                    },
+                    series: [
+                        {
+                            name: "Power (Tracked)",
+                            data: chartData[10],
+                            color: '#33A1DE'
+                        },
+                        {
+                            name: "Power (Fixed)",
+                            data: chartData[9],
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    ]
+                });
+
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("main").style.display = "block";
+                
+                $('#min, #max').on( 'change', function() {
+                    datas.draw();
+                    chartData = initData();
+                    ctx.series[0].setData(chartData[1]);
+                    ctx2.series[0].setData(chartData[2]);
+                    ctx3.series[0].setData(chartData[5]);
+                    ctx4.series[0].setData(chartData[6]);
+                    ctx5.series[0].setData(chartData[3]);
+                    ctx6.series[0].setData(chartData[4]);
+                    ctx7.series[0].setData(chartData[1]);
+                    ctx7.series[1].setData(chartData[7]);
+                    ctx8.series[0].setData(chartData[10]);
+                    ctx8.series[1].setData(chartData[7]);
+                    ctx9.series[0].setData(chartData[10]);
+                    ctx9.series[1].setData(chartData[9]);
+                } );
+                } );
+                
+                (function (factory) {
+                    if (typeof define === "function" && define.amd) {
+                        define(["jquery", "moment", "datatables.net"], factory);
+                    } else {
+                        factory(jQuery, moment);
+                    }
+                }(function ($, moment) {
+                 
+                $.fn.dataTable.moment = function ( format, locale, reverseEmpties ) {
+                    var types = $.fn.dataTable.ext.type;
+                 
+                    // Add type detection
+                    types.detect.unshift( function ( d ) {
+                        if ( d ) {
+                            // Strip HTML tags and newline characters if possible
+                            if ( d.replace ) {
+                                d = d.replace(/(<.*?>)|(\r?\n|\r)/g, '');
+                            }
+                 
+                            // Strip out surrounding white space
+                            d = $.trim( d );
+                        }
+                 
+                        // Null and empty values are acceptable
+                        if ( d === '' || d === null ) {
+                            return 'moment-'+format;
+                        }
+                 
+                        return moment( d, format, locale, true ).isValid() ?
+                            'moment-'+format :
+                            null;
+                    } );
+                 
+                    // Add sorting method - use an integer for the sorting
+                    types.order[ 'moment-'+format+'-pre' ] = function ( d ) {
+                        if ( d ) {
+                            // Strip HTML tags and newline characters if possible
+                            if ( d.replace ) {
+                                d = d.replace(/(<.*?>)|(\r?\n|\r)/g, '');
+                            }
+                 
+                            // Strip out surrounding white space
+                            d = $.trim( d );
+                        }
+                         
+                        return !moment(d, format, locale, true).isValid() ?
+                            (reverseEmpties ? -Infinity : Infinity) :
+                            parseInt( moment( d, format, locale, true ).format( 'x' ), 10 );
+                    };
+                };
+                 
+                }));
+        </script>
+        
+        <script>  
+            function openStuff(evt, stuffName) {
+                  // Declare all variables
+                  var i, tabcontent, tablinks;
+
+                  // Get all elements with class="tabcontent" and hide them
+                  tabcontent = document.getElementsByClassName("tabcontent");
+                  for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                  }
+
+                  // Get all elements with class="tablinks" and remove the class "active"
+                  tablinks = document.getElementsByClassName("tablinks");
+                  for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                  }
+
+                  // Show the current tab, and add an "active" class to the button that opened the tab
+                  document.getElementById(stuffName).style.display = "block";
+                  evt.currentTarget.className += " active";
+                }
+                
+                document.getElementById("defaultOpen").click();
+        </script>
+    </body>
+</html>

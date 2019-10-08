@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+		<link rel="shortcut icon" href="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" type="image/x-icon">
+		<meta name="description" content="">
+  
+		<title>Data Analyzer</title>
+		<link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+		<link rel="stylesheet" href="assets/tether/tether.min.css">
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+		<link rel="stylesheet" href="assets/socicon/css/styles.css">
+		<link rel="stylesheet" href="assets/dropdown/css/style.css">
+		<link rel="stylesheet" href="assets/theme/css/style.css">
+		<link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+		<link rel="stylesheet" href="/dataTables.bootstrap4.min.css">
+    </head>
+    <body>
+	<script src="/jquery.js"></script>
+        <script src="/jquery.dataTables.min.js"></script>
+	<script src="/jquery-ui.min.js"></script>
+        <script src="/dataTables.bootstrap4.min.js"></script>
+        <script src="/moment.min.js"></script>
+        <script src="/Chart.min.js"></script>
+	<script src="/datepick.js"></script>
+	
+		<section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-0">
+
+			<nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="hamburger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</button>
+				
+				<div class="menu-logo">
+					<div class="navbar-brand">
+						<span class="navbar-logo">
+						<a onclick="window.location.href='/'">
+							<img src="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" alt="Mobirise" title="" style="height: 4rem;">
+						</a>
+						</span>
+						<span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" onclick="window.location.href='/'">SOLAR DATA ANALYZER</a></span>
+					</div>
+				</div>
+				
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
+					<a class="nav-link link text-white display-4" onclick="window.location.href='/table'"><span class="mbri-growing-chart mbr-iconfont mbr-iconfont-btn"></span>
+                        
+					Data Analyzer</a>
+					</li><li class="nav-item"><a class="nav-link link text-white display-4" onclick="window.location.href='/errors'"><span class="mbri-italic mbr-iconfont mbr-iconfont-btn"></span>Errors</a></li>
+						<li class="nav-item">
+						<a class="nav-link link text-white display-4" onclick="window.location.href='/'"><span class="mbri-star mbr-iconfont mbr-iconfont-btn"></span>
+                        
+						About &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</a>
+					</li></ul>
+            
+				</div>
+			</nav>
+		</section>
+		
+		<br><br><br><br>
+        <div class="container">
+            <hr>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/csv'">Download CSV</button>
+	    <p>
+		    <span>From: </span><input type="text" id="datefrom">
+		    <span>To: </span><input type="text" id="dateto">
+	    </p>
+	    
+            <hr>
+            <table id="data" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Voltage Reading</th>
+                        <th>Current Reading</th>
+                        <th>Temperature</th>
+                        <th>Humidity</th>
+                        <th>Luminosity</th>
+                        <th>Global Horizontal Irradiance (GHI)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0; i < data.length; i++) { %>
+                    <tr>
+                        <td><%= data[i].timestamp %></td>
+                        <td><%= data[i].voltage %></td>
+                        <td><%= data[i].current %></td>
+                        <td><%= data[i].temperature %></td>
+                        <td><%= data[i].humidity %></td>
+                        <td><%= data[i].luminosity %></td>
+                        <td><%= data[i].radiation %></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <hr>
+            <center>
+                <h2>Temperature</h2>
+                <canvas id="dataChart" width="100%"></canvas>
+                <hr>
+                <h2>Humidity</h2>
+                <canvas id="dataChart2" width="100%"></canvas>
+                <hr>
+                <h2>Voltage</h2>
+                <canvas id="dataChart3" width="100%"></canvas>
+                <hr>
+                <h2>Current</h2>
+                <canvas id="dataChart4" width="100%"></canvas>
+                <hr>
+                <h2>Luminosity</h2>
+                <canvas id="dataChart5" width="100%"></canvas>
+                <hr>
+                <h2>Global Horizontal Irradiance (GHI)</h2>
+                <canvas id="dataChart6" width="100%"></canvas>
+            </center>
+            <hr>
+        </div>
+        <script>
+            var chartColors = {
+                red: 'rgba(255, 99, 132, 0.5)',
+                orange: 'rgba(255, 159, 64, 0.5)',
+                yellow: 'rgba(255, 205, 86, 0.5)',
+                green: 'rgba(75, 192, 192, 0.5)',
+                blue: 'rgba(54, 162, 235, 0.5)',
+                purple: 'rgba(153, 102, 255, 0.5)',
+                grey: 'rgba(231,233,237, 0.5)'
+            }
+            var rawData = <%- JSON.stringify(data) %>;
+            var labels = rawData.map(function(e) {
+                return new Date(e.timestamp);
+            })
+            var temperature = rawData.map(function(e) {
+                return e.temperature;
+            })
+            var humidity = rawData.map(function(e) {
+                return e.humidity;
+            })
+            var voltage = rawData.map(function(e) {
+                return e.voltage;
+            })
+            var current = rawData.map(function(e) {
+                return e.current;
+            })
+            var luminosity = rawData.map(function(e) {
+                return e.luminosity;
+            })
+            var radiation = rawData.map(function(e) {
+                return e.radiation;
+            })
+            
+            var ctx = document.getElementById('dataChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        fill: false,
+                        label: 'Temperature',
+                        data: temperature,
+                        backgroundColor: chartColors.blue
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    quarter: 'MMM YYYY h:mm a'
+                                }
+                            },
+                            distribution: 'linear'
+                        }]
+                    }
+                }
+            });
+            var ctx2 = document.getElementById('dataChart2').getContext('2d');
+            var myChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        fill: false,
+                        label: 'Humidity',
+                        data: humidity,
+                        backgroundColor: chartColors.green
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    quarter: 'MMM YYYY h:mm a'
+                                }
+                            },
+                            distribution: 'linear'
+                        }]
+                    }
+                }
+            });
+            var ctx3 = document.getElementById('dataChart3').getContext('2d');
+            var myChart3 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        fill: false,
+                        label: 'Voltage',
+                        data: voltage,
+                        backgroundColor: chartColors.yellow
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    quarter: 'MMM YYYY h:mm a'
+                                }
+                            },
+                            distribution: 'linear'
+                        }]
+                    }
+                }
+            });
+            var ctx4 = document.getElementById('dataChart4').getContext('2d');
+            var myChart4 = new Chart(ctx4, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        fill: false,
+                        label: 'Current',
+                        data: current,
+                        backgroundColor: chartColors.red
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    quarter: 'MMM YYYY h:mm a'
+                                }
+                            },
+                            distribution: 'linear'
+                        }]
+                    }
+                }
+            });
+            
+            var ctx5 = document.getElementById('dataChart5').getContext('2d');
+            var myChart5 = new Chart(ctx5, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        fill: false,
+                        label: 'Luminosity',
+                        data: luminosity,
+                        backgroundColor: chartColors.red
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    quarter: 'MMM YYYY h:mm a'
+                                }
+                            },
+                            distribution: 'linear'
+                        }]
+                    }
+                }
+            });
+            
+            var ctx6 = document.getElementById('dataChart6').getContext('2d');
+            var myChart6 = new Chart(ctx6, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        fill: false,
+                        label: 'Global Horizontal Irradiance (GHI)',
+                        data: radiation,
+                        backgroundColor: chartColors.green
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    quarter: 'MMM YYYY h:mm a'
+                                }
+                            },
+                            distribution: 'linear'
+                        }]
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

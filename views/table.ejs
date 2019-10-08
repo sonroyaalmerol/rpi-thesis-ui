@@ -1,208 +1,183 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="/bootstrap.css">
-        <link rel="stylesheet" href="/dataTables.bootstrap4.min.css">
-    </head>
-    <body>
-        <script src="/jquery.js"></script>
-        <script src="/jquery.dataTables.min.js"></script>
-        <script src="/dataTables.bootstrap4.min.js"></script>
-        <script src="/moment.min.js"></script>
-        <script src="/Chart.min.js"></script>
-        <div class="container">
-            <hr>
-            <button type="button" class="btn btn-primary" onclick="window.location.href='/csv'">Download CSV</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='/errors'">Check errors</button>
-            <hr>
-            <table id="data" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Voltage Reading</th>
-                        <th>Current Reading</th>
-                        <th>Temperature</th>
-                        <th>Humidity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(var i=0; i < data.length; i++) { %>
-                    <tr>
-                        <td><%= data[i].timestamp %></td>
-                        <td><%= data[i].voltage %></td>
-                        <td><%= data[i].current %></td>
-                        <td><%= data[i].temperature %></td>
-                        <td><%= data[i].humidity %></td>
-                    </tr>
-                    <% } %>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Voltage Reading</th>
-                        <th>Current Reading</th>
-                        <th>Temperature</th>
-                        <th>Humidity</th>
-                    </tr>
-                </tfoot>
-            </table>
-            <hr>
-            <center>
-                <h2>Temperature</h2>
-                <canvas id="dataChart" width="100%"></canvas>
-                <hr>
-                <h2>Humidity</h2>
-                <canvas id="dataChart2" width="100%"></canvas>
-                <hr>
-                <h2>Voltage</h2>
-                <canvas id="dataChart3" width="100%"></canvas>
-                <hr>
-                <h2>Current</h2>
-                <canvas id="dataChart4" width="100%"></canvas>
-            </center>
-            <hr>
+<html  >
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" type="image/x-icon">
+  <meta name="description" content="">
+  
+  <title>Home</title>
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  
+  
+  
+</head>
+<body>
+  <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-0">
+
+    
+
+    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">
+                <span class="navbar-logo">
+                    <a onclick="window.location.href='/'">
+                         <img src="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-122x122.png" alt="Mobirise" title="" style="height: 4rem;">
+                    </a>
+                </span>
+                <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" onclick="window.location.href='/'">SOLAR DATA ANALYZER</a></span>
+            </div>
         </div>
-        <script>
-            $(document).ready(function() {
-                $('#data').DataTable({
-                    columnDefs:[{targets: 0, render: (data) => {
-                        return moment(data).format("MMM DD YYYY, h:mm:ss a");
-                    }}],
-                    order: [[ 0, "desc" ]]
-                });
-            } );
-        </script>
-        <script>
-            var chartColors = {
-                red: 'rgba(255, 99, 132, 0.5)',
-                orange: 'rgba(255, 159, 64, 0.5)',
-                yellow: 'rgba(255, 205, 86, 0.5)',
-                green: 'rgba(75, 192, 192, 0.5)',
-                blue: 'rgba(54, 162, 235, 0.5)',
-                purple: 'rgba(153, 102, 255, 0.5)',
-                grey: 'rgba(231,233,237, 0.5)'
-            }
-            var rawData = <%- JSON.stringify(data) %>;
-            var labels = rawData.map(function(e) {
-                return new Date(e.timestamp);
-            })
-            var temperature = rawData.map(function(e) {
-                return e.temperature;
-            })
-            var humidity = rawData.map(function(e) {
-                return e.humidity;
-            })
-            var voltage = rawData.map(function(e) {
-                return e.voltage;
-            })
-            var current = rawData.map(function(e) {
-                return e.current;
-            })
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
+                    <a class="nav-link link text-white display-4" onclick="window.location.href='/table'"><span class="mbri-growing-chart mbr-iconfont mbr-iconfont-btn"></span>
+                        
+                        Data Analyzer</a>
+                </li><li class="nav-item"><a class="nav-link link text-white display-4" onclick="window.location.href='/errors'"><span class="mbri-italic mbr-iconfont mbr-iconfont-btn"></span>Errors</a></li>
+                <li class="nav-item">
+                    <a class="nav-link link text-white display-4" onclick="window.location.href='/'"><span class="mbri-star mbr-iconfont mbr-iconfont-btn"></span>
+                        
+                        About &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</a>
+                </li></ul>
             
-            var ctx = document.getElementById('dataChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        fill: false,
-                        label: 'Temperature',
-                        data: temperature,
-                        backgroundColor: chartColors.blue
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                displayFormats: {
-                                    quarter: 'MMM YYYY h:mm a'
-                                }
-                            },
-                            distribution: 'linear'
-                        }]
-                    }
-                }
-            });
-            var ctx2 = document.getElementById('dataChart2').getContext('2d');
-            var myChart2 = new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        fill: false,
-                        label: 'Humidity',
-                        data: humidity,
-                        backgroundColor: chartColors.green
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                displayFormats: {
-                                    quarter: 'MMM YYYY h:mm a'
-                                }
-                            },
-                            distribution: 'linear'
-                        }]
-                    }
-                }
-            });
-            var ctx3 = document.getElementById('dataChart3').getContext('2d');
-            var myChart3 = new Chart(ctx3, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        fill: false,
-                        label: 'Voltage',
-                        data: voltage,
-                        backgroundColor: chartColors.yellow
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                displayFormats: {
-                                    quarter: 'MMM YYYY h:mm a'
-                                }
-                            },
-                            distribution: 'linear'
-                        }]
-                    }
-                }
-            });
-            var ctx4 = document.getElementById('dataChart4').getContext('2d');
-            var myChart4 = new Chart(ctx4, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        fill: false,
-                        label: 'Current',
-                        data: current,
-                        backgroundColor: chartColors.red
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            type: 'time',
-                            time: {
-                                displayFormats: {
-                                    quarter: 'MMM YYYY h:mm a'
-                                }
-                            },
-                            distribution: 'linear'
-                        }]
-                    }
-                }
-            });
-        </script>
-    </body>
+        </div>
+    </nav>
+</section>
+
+<section class="engine"></section><section class="cid-qTkA127IK8 mbr-fullscreen mbr-parallax-background" id="header2-1">
+
+    
+
+    
+
+    <div class="container align-center">
+        <div class="row justify-content-md-center">
+            <div class="mbr-white col-md-10">
+                <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1">
+                    SOLAR DATA ANALYZER</h1>
+                
+                <p class="mbr-text pb-3 mbr-fonts-style display-5">THIS IS A WEB APPLICATION DEVELPOED BY ELECTRICAL ENGINEERING STUDENTS&nbsp;IN LINE WITH OUR UNDERGRADUATED THESIS ENTITLED "EFFICIENCT AND ECONOMIC EVALUATION OF A PHOTOVOLTAIC SYSTEM THROUGH THE DEVELOPMENT OF A SOLAR DATA LOGGER USING RASPBERRY-PI"</p>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-secondary display-4" href="page2.html">LEARN MORE</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
+        <a href="#next">
+            <i class="mbri-down mbr-iconfont"></i>
+        </a>
+    </div>
+</section>
+
+<section class="cid-rBu3D8QMTk" id="footer1-5">
+
+    
+
+    
+
+    <div class="container">
+        <div class="media-container-row content text-white">
+            <div class="col-12 col-md-3">
+                <div class="media-wrap">
+                    <a href="https://mobirise.co/">
+                        <img src="assets/images/kisspng-solar-power-business-internet-of-things-solar-pane-5b2d789b46d5b8.7641683815297066512902-192x192.png" alt="Mobirise" title="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 mbr-fonts-style display-7">
+                <h5 class="pb-3">
+                    Proponents</h5>
+                <p class="mbr-text">Bautista, Andy William N.<br>Dela Torre, Vincent Max P.<br>Rama, Jessie L.</p>
+            </div>
+            <div class="col-12 col-md-3 mbr-fonts-style display-7">
+                <h5 class="pb-3">Contact</h5>
+                <p class="mbr-text">
+                    Email: jlrama@outlook.ph</p>
+            </div>
+            <div class="col-12 col-md-3 mbr-fonts-style display-7">
+                <h5 class="pb-3"></h5>
+                <p class="mbr-text"></p>
+            </div>
+        </div>
+        <div class="footer-lower">
+            <div class="media-container-row">
+                <div class="col-sm-12">
+                    <hr>
+                </div>
+            </div>
+            <div class="media-container-row mbr-white">
+                <div class="col-sm-6 copyright">
+                    <p class="mbr-text mbr-fonts-style display-7">
+                        © Copyright 2019 JAM Electrical Services - All Rights Reserved
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="social-list align-right">
+                        <div class="soc-item">
+                            <a href="https://twitter.com/mobirise" target="_blank">
+                                <span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>
+                            </a>
+                        </div>
+                        <div class="soc-item">
+                            <a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
+                                <span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>
+                            </a>
+                        </div>
+                        <div class="soc-item">
+                            <a href="https://www.youtube.com/c/mobirise" target="_blank">
+                                <span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social"></span>
+                            </a>
+                        </div>
+                        <div class="soc-item">
+                            <a href="https://instagram.com/mobirise" target="_blank">
+                                <span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social"></span>
+                            </a>
+                        </div>
+                        <div class="soc-item">
+                            <a href="https://plus.google.com/u/0/+Mobirise" target="_blank">
+                                <span class="socicon-googleplus socicon mbr-iconfont mbr-iconfont-social"></span>
+                            </a>
+                        </div>
+                        <div class="soc-item">
+                            <a href="https://www.behance.net/Mobirise" target="_blank">
+                                <span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="assets/popper/popper.min.js"></script>
+  <script src="assets/tether/tether.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/dropdown/js/nav-dropdown.js"></script>
+  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
+  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="assets/parallax/jarallax.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+  
+  
+</body>
 </html>
