@@ -6,7 +6,7 @@ app.use(express.static('views/vendors'))
 const port = 3001
 const Papa = require('papaparse')
 const moment = require('moment')
-var { db, errdb, settingsdb } = require('./db')
+var { db, errdb, settingsdb, lcoedb } = require('./db')
 
 var bodyParser = require('body-parser')
 app.use(bodyParser.json()) // support json encoded bodies
@@ -30,9 +30,16 @@ app.get('/table', async (req, res) => {
   })
   let result = await db.find({ selector: { timestamp: {$exists: true} }, sort: [{timestamp: 'desc'}], limit: 999999999999 })
   let setting = await settingsdb.find({ selector: { value: {$exists: true} } })
+  let lcoe = await lcoedb.allDocs({ include_docs: true })
+  lcoe = lcoe.rows
+  let lcoeEntries = []
+  lcoe.map((res) => {
+    lcoeEntries.push(res.doc)
+  })
   res.render('table2', { 
     data: result.docs,
     setting: setting.docs,
+    lcoe: lcoeEntries,
     moment
   })
 })
