@@ -13,7 +13,7 @@
     "body-parser": "^1.19.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "node-gyp-build": "^4.1.0",
     "papaparse": "^5.0.2",
     "pouchdb": "^7.1.1",
